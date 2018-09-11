@@ -1,6 +1,11 @@
 <?php
 class IncSys {
 	public function __construct($strs = array(),$type){
+		define("GHOST","");
+		define("GNAME","");
+		define("GUSER","");
+		define("GPASS","");
+		define("GDB","");
 		$data = array();
 		foreach($strs as $str){
 			$data = array_diff(scandir(str_replace('util/inc.php',$str,__FILE__)),array('..','.'));

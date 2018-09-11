@@ -6,8 +6,16 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="pagetitle text-centered">
+			<div class="textcenter">
 				<h2>Sistema de saneamento básico</h2>	
+			</div>
+			<div class="textcenter">
+				<div id="message-success">
+					<span class="message-position"> LOGIN REALIZADO COM ÊXITO. REDIRECIONANDO AO SISTEMA...</span>
+				</div>
+				<div id="message-error">
+					<span class="message-position"> ERRO AO REALIZAR O LOGIN. CONTACTE O ADMINISTRADOR...</span>
+				</div>
 			</div>
 			<div class="row col-12">
 				<form id="flogin" name="flogin" method="POST" class="col-12">
@@ -23,6 +31,9 @@
 					</div>
 					<div class="form-group">
 						<button name="btn-login-submit" id="btn-login-submit" class="btn btn-success btn-lg btn-block" id="">ACESSAR</button>
+					</div>
+					<div class="form-group textright">
+						<span class="form-text text-muted "> <a class="link" href="">Cadastre-se -></a> </span>	
 					</div>
 				</form>
 			</div>

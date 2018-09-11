@@ -1,10 +1,10 @@
 <?php
 class ConMySQL{
-	private $host 	= "";
-	private $user 	= "";
-	private $pswd 	= "";
-	private $db 	= "";
-	private $dbh 	= "";
+	private $host;
+	private $user;
+	private $pswd;
+	private $db;
+	protected $dbh;
 
 	public function getHost()	{ return $this->host; 	}
 	public function getUser()	{ return $this->user; 	}
@@ -16,37 +16,42 @@ class ConMySQL{
 	public function setuser ($user)	{ $this->user = $user; 	}
 	public function setPswd ($pswd)	{ $this->pswd = $pswd; 	}
 	public function setDB	($db)	{ $this->db = $db; 		}
-	public function setDBH  ($dbh)	{ $this->dbh = $dbh; 	}
+	public function setDBH  ( $dbh)	{ $this->dbh = $dbh;}
 
-	public function __construct(){
+	public function __construct($host,$user,$pswd,$db){
 		$this->setHost($host);
 		$this->setUser($user);
 		$this->setPswd($pswd);
 		$this->setDB($db);
 		try{
-			$dsn = "host: ".$this->getHost();
-			$dbh = new PDO("mysql: ".$dsn,$this->getUser(),$this->getPswd(),$this->getDB());
+			$dbh = new PDO("mysql:host=".$this->getHost().";dbname=".$this->getDB().";port=3306",$this->getUser(),$this->getPswd());
 			$this->setDBH($dbh);
-		}catch(Exception $e){
+		}catch(PDOException $e){
 			return "Connection error ". $e->getMessage();
 		}
 	}
 
-	public function lookup($query){
-		$dataset = array();
-		$conn = $this->getDBH();
-		$result = $conn->query($query);
-		while($row = $result->fech_assoc()){
-			$dataset[] = $row;
+	public function lookup($sql){
+		try{
+			$conn = $this->getDBH();
+			$result = $conn->query($sql);	
+			$dataset = $result->fetchAll();
+			$this->close($conn);
+			return $dataset;
+		}catch(PDOException $e){
+			return $e->getMessage();
 		}
-		return $dataset;
 	}
-
+	private function close($dbh){
+		$this->setDBH(null);
+	}
 	public function exec_sql($query){
 		$conn = $this->getDBH();
 		if($conn->query($query)){
+			$this->close($conn);
 			return true;
 		}else{
+			$conn->close();
 			return false;
 		}
 	}
