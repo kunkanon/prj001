@@ -55,5 +55,16 @@ class ConMySQL{
 			return false;
 		}
 	}
+
+	public function addLog($query){
+		$conn = $this->getDBH();
+		if($conn->query($query)){
+			$this->close($conn);
+			return true;
+		}else{
+			$conn->close();
+			return false;
+		}
+	}
 }
 ?>
