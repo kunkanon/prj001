@@ -36,33 +36,34 @@ class ConMySQL{
 			$conn = $this->getDBH();
 			$result = $conn->query($sql);	
 			$dataset = $result->fetchAll();
-			$this->close($conn);
 			return $dataset;
 		}catch(PDOException $e){
 			return $e->getMessage();
 		}
 	}
-	private function close($dbh){
+	public function close($dbh){
 		$this->setDBH(null);
 	}
-	public function exec_sql($query){
-		$conn = $this->getDBH();
-		if($conn->query($query)){
-			$this->close($conn);
-			return true;
-		}else{
-			$conn->close();
-			return false;
+	public function exec_sql($sql){
+		try{
+			$conn = $this->getDBH();
+			$conn->exec($sql);
+			$ret = $conn->errorInfo();
+			if(!empty($ret[2])){
+				return $ret[2];
+			}else{
+				return true;
+			}
+		}catch(PDOException $e){
+			return $e->getMessage();
 		}
 	}
 
 	public function addLog($query){
 		$conn = $this->getDBH();
-		if($conn->query($query)){
-			$this->close($conn);
+		if($conn->exec($query)){
 			return true;
 		}else{
-			$conn->close();
 			return false;
 		}
 	}
