@@ -4,6 +4,12 @@ if(!isset($_SESSION['main']['user']) && !isset($_SESSION['main']['dt'])){
 }else{
   $usrsession = $_SESSION['main']['user'];
   $dtini = $_SESSION['main']['dt'];
+  $colhid = $_SESSION['main']['colid'];
+  if(isset($_SESSION['main']['empresa']) && $_SESSION['main']['empresa']==true){
+    $type = "pj";
+  }else{
+    $type = "usr";
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -23,6 +29,8 @@ if(!isset($_SESSION['main']['user']) && !isset($_SESSION['main']['dt'])){
 	</head>
 	<body id="page-top">
     <input type="text" id="pjhid" name="pjhid" value="<?php echo $usrsession; ?>">
+    <input type="text" id="colhid" name="colhid" value="<?php echo $colhid; ?>">
+    <input type="text" id="typehid" name="typehid" value="<?php echo $type; ?>">
 		<nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
       <div class="container">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">Sistema de saneamento básico</a>
@@ -65,7 +73,7 @@ if(!isset($_SESSION['main']['user']) && !isset($_SESSION['main']['dt'])){
                   <div class="control-group float-left col-lg-6 ">
                   <div class="form-group floating-label-form-group controls mb-0 pb-2">
                   <label>'.$placeholder[$key].'</label>
-                  <input class="form-control" id="field_'.$key.'" name="field_'.$key.'" type="file" placeholder="'.$placeholder[$key].'" required="required" data-validation-required-message="Por favor informe: '.$placeholder[$key].'.">
+                  <input class="form-control" id="doc_'.$key.'" name="doc_'.$key.'" type="file" placeholder="'.$placeholder[$key].'" required="required" data-validation-required-message="Por favor informe: '.$placeholder[$key].'.">
                   <p class="help-block text-danger"></p>
                   </div>
                   </div>
@@ -75,7 +83,7 @@ if(!isset($_SESSION['main']['user']) && !isset($_SESSION['main']['dt'])){
                 <div class="control-group float-left col-lg-6 ">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                 <label>'.$placeholder[$key].'</label>
-                <input class="form-control" id="field_'.$key.'" name="field_'.$key.'" type="text" placeholder="'.$placeholder[$key].'" required="required" data-validation-required-message="Por favor informe: '.$placeholder[$key].'.">
+                <input class="form-control" id="field_'.$key.'" name="field_'.$key.'" type="text" placeholder="'.$placeholder[$key].'" required="required" data-validation-required-message="Por favor informe: '.$placeholder[$key].'." value="'.$_SESSION['main']['rating']['values'][$key].'">
                 <p class="help-block text-danger"></p>
                 </div>
                 </div>
@@ -86,7 +94,7 @@ if(!isset($_SESSION['main']['user']) && !isset($_SESSION['main']['dt'])){
                 <div class="control-group float-left col-lg-6 ">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
                 <label>'.$placeholder[$key].'</label>
-                <input class="form-control" min="1" max="5" id="field_'.$key.'" name="field_'.$key.'" type="number" placeholder="'.$placeholder[$key].'" required="required" data-validation-required-message="Por favor informe: '.$placeholder[$key].'.">
+                <input class="form-control" min="1" max="5" id="field_'.$key.'" name="field_'.$key.'" type="number" placeholder="'.$placeholder[$key].'" required="required" data-validation-required-message="Por favor informe: '.$placeholder[$key].'." value="'.$_SESSION['main']['rating']['values'][$key].'">
                 <p class="help-block text-danger"></p>
                 </div>
                 </div>

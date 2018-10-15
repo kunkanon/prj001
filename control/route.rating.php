@@ -8,6 +8,7 @@ $data = array();
 $data[] = $_POST['type'];
 $data[] = str_replace("rating_","",$_POST['idcoleta']);
 $data[] = $_POST['iduserpj'];
+$_SESSION['main']['colid'] = $data[1];
 if($_POST['type']=="routeAvaliacao"){
 	if(isset($_SESSION['main']['empresa']) && $_SESSION['main']['empresa']==true){
 		$_SESSION['main']['rating']['columnames'] = array("avaliacao_catador","avaliacao_seletivo_catador","avaliacao_tratamento_catador","comentario_catador","anexo_foto_doc_catador");
@@ -23,12 +24,21 @@ if($_POST['type']=="routeAvaliacao"){
 		$_SESSION['main']['rating']['placeholder'] = array("CATADOR","ATENDIMENTO","EDUCAÇÃO","CONFIANÇA","COMENTÁRIO","ENVIAR DOCUMENTO");
 	}
 	$rs = $conn->lookup($sql);
-	foreach($_SESSION['main']['rating']['columnames'] as $key => $values){
-		$index = $key+1;
-		if(isset($rs[0][$index])){
-			$_SESSION['main']['rating']['values'][$key] = $rs[0][$index];
+	if(isset($rs[0][0])){
+		$qtd = count($rs[0]);
+		$_SESSION['main']['rating']['values'] = array();
+		$j = 0;
+		for($i=1;$i<=$qtd;$i++){
+			if(isset($rs[0][$i])){
+				$_SESSION['main']['rating']['values'][$j] = $rs[0][$i];
+			}else{
+				$_SESSION['main']['rating']['values'][$j] = "";
+			}
+			$j++;
 		}
 	}
+	
+
 	$_SESSION['main']['rating']['userid'] = $data[2];
 	$_SESSION['main']['rating']['colid'] = $data[1];
 $dataset[0] = 1;

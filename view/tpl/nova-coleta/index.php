@@ -40,9 +40,6 @@ if(!isset($_SESSION['main']['user']) && !isset($_SESSION['main']['dt']) &&
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../coletas/">Coletas</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../perfil">Perfil</a>
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../relatorio/">Relatórios</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">

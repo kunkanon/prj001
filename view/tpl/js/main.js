@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	$("#usridhid").hide();
 	$("#pjhid").hide();
+	$("#colhid").hide();
+	$("#typehid").hide();
 	$("#registerlitro").hide();
 	$("#registerlitrosel").change(function(){
 		$("#registerlitro").val($(this).val());
@@ -650,6 +652,75 @@ $(document).ready(function(){
 			  text: 'Algo deu errado'
 			})
 		})
+	})
+	$(".btnratingusergarbage").click(function(){
+		x = $(this).attr("id");
+		usrcode = $("#pjhid").val();
+		param = {
+			'type' : 'routeAvaliacao',
+			'idcoleta' : x,
+			'iduserpj' : usrcode
+		}
+		$.ajax({
+			url: '../../control/route.rating.php',
+			data: param,
+			type: "POST",
+			dataType: "JSON"
+		}).done(function(resultset){
+			if(resultset[0]==1){
+				window.location="../"+resultset[1]+"/";
+			}else{
+				swal({
+			  		type: 'error',
+			  		title: 'Oops...',
+			  		text: 'Algo deu errado'
+				})	
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			console.log(jqXHR.responseText);
+			swal({
+			  type: 'error',
+			  title: 'Oops...',
+			  text: 'Algo deu errado'
+			})
+		})	
+	})
+
+	$("#updaterating").click(function(e){
+		e.preventDefault();
+		param = {
+			'type' : $("#typehid").val(),
+			'idusr' : $("#pjhid").val(),
+			'idcol' : $("#colhid").val(),
+			'field0': $("#field_0").val(),
+			'field1': $("#field_1").val(),
+			'field2': $("#field_2").val(),
+			'field3': $("#field_3").val(),
+			'field4': $("#field_4").val()
+
+		}
+		$.ajax({
+			url: '../../control/o.update.rating.php',
+			data: param,
+			type: "POST",
+			dataType: "JSON"
+		}).done(function(response){
+			if(response[0]==1){
+				swal(
+				  'Sucesso!',
+				  'Coleta avaliada com sucesso!',
+				  'success'
+				)
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			console.log(jqXHR.responseText);
+			swal({
+			  type: 'error',
+			  title: 'Oops...',
+			  text: 'Algo deu errado'
+			})
+		})
+		
 	})
 })
 
